@@ -46,13 +46,13 @@ public class FamilyTree
                 return this;
                     
             // No, recurse. Check all children of this node.
-            for (TreeNode child: children)
+            for (TreeNode child: this.children)
             {
                 // If child.getNodeWithName(targetName) returns a non-null node,
                 // then that's the node we're looking for. Return it.
-            	TreeNode target = getNodeWithName(targetName);
-            	if(target!=null)
-            		return target;
+            	TreeNode name = child.getNodeWithName(targetName);
+            	if(name!=null)
+            		return name;
             }
             
             // Not found anywhere.
@@ -136,8 +136,8 @@ public class FamilyTree
 		// Extract parent and array of children.
 		int colonIndex = line.indexOf(":"); //should be the index of the colon in line.
 		if (colonIndex < 0)
-			throw new TreeException("Tree exception");//a TreeException with a useful message
-		String parent = line.substring(0,colonIndex-1); //The substring of line that starts at char #0 and ends just before colonIndex. Check the API for 
+			throw new TreeException("no colon");//a TreeException with a useful message
+		String parent = line.substring(0,colonIndex); //The substring of line that starts at char #0 and ends just before colonIndex. Check the API for 
 				          // class java.util.String, method substring(), if you need guidance.
 		String childrenString = line.substring(colonIndex+1); //The substring of line that starts just after colonIndex and goes through the end of
 				                   //the line. You'll use a different version of substring().
@@ -154,7 +154,7 @@ public class FamilyTree
 		{
 			parentNode = root.getNodeWithName(parent);
 			if(parentNode==null){
-				throw new TreeException("Tree exception");
+				throw new TreeException("no parent");
 			}//There's a method in Node that searches for a named node. 
 			//??? If the parent node wasn't found, there must have been something wrong in the 
 				//data file. Throw an exception.
@@ -180,10 +180,10 @@ public class FamilyTree
 		// Get nodes for input names.
 		TreeNode node1 = root.getNodeWithName(name1);		// node whose name is name1
 		if (node1 == null)
-			throw new TreeException("tree exception");//??? Throw a TreeException with a useful message
+			throw new TreeException("no node1");//??? Throw a TreeException with a useful message
 		TreeNode node2 = root.getNodeWithName(name2);		// node whose name is name2
 		if (node2 == null)
-			throw new TreeException("Tree exception");//??? Throw TreeException with a useful message
+			throw new TreeException("no node2");//??? Throw TreeException with a useful message
 		
 		// Get ancestors of node1 and node2.
 		ArrayList<TreeNode> ancestorsOf1 = node1.collectAncestorsToList();
